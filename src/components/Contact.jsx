@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState } from "react";
 import {
   FaChartLine,
   FaUsers,
@@ -9,7 +9,7 @@ import {
   FaBuilding,
   FaShoppingBag,
   FaStar,
-} from "react-icons/fa"
+} from "react-icons/fa";
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -17,24 +17,24 @@ function Contact() {
     email: "",
     project: "Quantitative Research",
     message: "",
-  })
-  const [status, setStatus] = useState("")
-  const [errors, setErrors] = useState([])
-  const [loading, setLoading] = useState(false)
+  });
+  const [status, setStatus] = useState("");
+  const [errors, setErrors] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: value,
-    }))
-  }
+    }));
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
-    setStatus("")
-    setErrors([])
+    e.preventDefault();
+    setLoading(true);
+    setStatus("");
+    setErrors([]);
 
     try {
       const response = await fetch("/contact", {
@@ -43,31 +43,31 @@ function Contact() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
-      })
+      });
 
-      const data = await response.json()
+      const data = await response.json();
 
       if (data.success) {
-        setStatus("Inquiry sent successfully.")
+        setStatus("Inquiry sent successfully.");
         setFormData({
           name: "",
           email: "",
           project: "Quantitative Research",
           message: "",
-        })
+        });
       } else {
         if (data.errors) {
-          setErrors(data.errors.map((err) => err.msg))
+          setErrors(data.errors.map((err) => err.msg));
         } else {
-          setStatus(data.message || "Something went wrong.")
+          setStatus(data.message || "Something went wrong.");
         }
       }
     } catch (error) {
-      setStatus("Server connection failed.")
+      setStatus("Server connection failed.");
     }
 
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   const specialties = [
     { icon: <FaChartLine />, title: "Brand Momentum Studies" },
@@ -79,7 +79,7 @@ function Contact() {
     { icon: <FaBuilding />, title: "B2B Research" },
     { icon: <FaShoppingBag />, title: "B2C Research" },
     { icon: <FaStar />, title: "Customer Experience" },
-  ]
+  ];
 
   return (
     <section id="contact" className="mx-auto max-w-7xl px-6 py-24">
@@ -169,7 +169,7 @@ function Contact() {
                   placeholder="Tell us about your research needs"
                   required
                   className="mt-2 w-full rounded-2xl border border-white/10 bg-slate-900 px-4 py-3 text-white outline-none focus:border-cyan-400/40"
-                ></textarea>
+                />
               </div>
             </div>
 
@@ -177,7 +177,7 @@ function Contact() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full rounded-2xl bg-cyan-400 py-3 font-semibold text-slate-950 transition hover:bg-cyan-300 disabled:cursor-not-allowed disabled:opacity-70"
+                className="w-full rounded-2xl bg-cyan-400 py-3 font-semibold text-slate-950 hover:bg-cyan-300 disabled:cursor-not-allowed disabled:opacity-70"
               >
                 {loading ? "Sending..." : "Send Inquiry"}
               </button>
@@ -191,16 +191,14 @@ function Contact() {
               )}
 
               {status && (
-                <p className="mt-3 text-sm text-cyan-300">
-                  {status}
-                </p>
+                <p className="mt-3 text-sm text-cyan-300">{status}</p>
               )}
             </div>
           </form>
         </div>
       </div>
     </section>
-  )
+  );
 }
 
-export default Contact
+export default Contact;

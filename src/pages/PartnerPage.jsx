@@ -1,10 +1,10 @@
-import { useState } from "react"
+import { useState } from "react";
 import {
   FaInstagram,
   FaFacebookF,
   FaTwitter,
   FaLinkedinIn,
-} from "react-icons/fa"
+} from "react-icons/fa";
 
 function PartnerPage() {
   const [formData, setFormData] = useState({
@@ -12,24 +12,24 @@ function PartnerPage() {
     email: "",
     project: "Partnership Inquiry",
     message: "",
-  })
-  const [status, setStatus] = useState("")
-  const [errors, setErrors] = useState([])
-  const [loading, setLoading] = useState(false)
+  });
+  const [status, setStatus] = useState("");
+  const [errors, setErrors] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: value,
-    }))
-  }
+    }));
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
-    setStatus("")
-    setErrors([])
+    e.preventDefault();
+    setLoading(true);
+    setStatus("");
+    setErrors([]);
 
     try {
       const response = await fetch("/contact", {
@@ -38,31 +38,31 @@ function PartnerPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
-      })
+      });
 
-      const data = await response.json()
+      const data = await response.json();
 
       if (data.success) {
-        setStatus("Partnership inquiry sent successfully.")
+        setStatus("Partnership inquiry sent successfully.");
         setFormData({
           name: "",
           email: "",
           project: "Partnership Inquiry",
           message: "",
-        })
+        });
       } else {
         if (data.errors) {
-          setErrors(data.errors.map((err) => err.msg))
+          setErrors(data.errors.map((err) => err.msg));
         } else {
-          setStatus(data.message || "Something went wrong.")
+          setStatus(data.message || "Something went wrong.");
         }
       }
     } catch (error) {
-      setStatus("Server connection failed.")
+      setStatus("Server connection failed.");
     }
 
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   return (
     <div className="min-h-screen bg-slate-950 text-white">
@@ -178,7 +178,7 @@ function PartnerPage() {
                   placeholder="Tell us how you would like to collaborate"
                   required
                   className="w-full rounded-2xl border border-white/10 bg-slate-900 px-4 py-3 text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-400/40"
-                ></textarea>
+                />
               </div>
 
               <button
@@ -200,15 +200,11 @@ function PartnerPage() {
               )}
 
               {status && (
-                <p className="text-sm text-cyan-300">
-                  {status}
-                </p>
+                <p className="text-sm text-cyan-300">{status}</p>
               )}
 
               <div className="pt-4">
-                <p className="mb-4 text-sm text-slate-400">
-                  Connect with us
-                </p>
+                <p className="mb-4 text-sm text-slate-400">Connect with us</p>
                 <div className="flex items-center gap-4 text-lg text-slate-400">
                   <a
                     href="https://instagram.com/YOUR_USERNAME"
@@ -249,7 +245,7 @@ function PartnerPage() {
         </div>
       </section>
     </div>
-  )
+  );
 }
 
-export default PartnerPage
+export default PartnerPage;
